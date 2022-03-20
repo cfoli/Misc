@@ -18,7 +18,7 @@ function [pqrst, pqrstIdx] = qrsDetect(ecg,Rthresh,t,Fs,tperiod)
     %                           indexes of the detected P,Q,R,S and T peaks respectively.
     %                           e.g. pqrst{2} contains the time locations (in sec) of the detected Q peaks.
 
-    %%%% Parameters
+    %% Parameters
 
     arguments
         ecg;
@@ -28,17 +28,18 @@ function [pqrst, pqrstIdx] = qrsDetect(ecg,Rthresh,t,Fs,tperiod)
         tperiod; % period of one heart beat (in sec)
     end
 
-    %%%% Detect peaks
+    %% Detect peaks
 
     % Intuition:
     % 1. First find the R peaks and use that to extract the corresponding ECG waveforms
-    % 2. The Q trough is the minimum value b/n the beginnning of the waveform and the R peak
+    % 2. The Q trough is the minimum value b/n the P and the R peaks
     % 3. The P peak is the maximum value b/n the beginning of the waveform and the Q trough
     % 4. The S trough is the minimum value within the entire waveform
     % 5. The T peak is the maximum value b/n the S trough and the end of the waveform:
 
     %     bpm2Hz = (tperiod/60); % Heart rate in Hz
     %     tperiod = 1/bpm2Hz; % Sampling period (in sec)
+
     % Find R peaks
     pks     = find(islocalmax(ecg,'MinProminence',floor(Rthresh), ...
         "MinSeparation",floor(0.8*tperiod*Fs))); % find threshold crossings of interest
