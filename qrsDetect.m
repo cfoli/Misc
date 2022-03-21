@@ -1,6 +1,6 @@
 function [pqrst, pqrstIdx] = qrsDetect(ecg,args)
 
-    %%%% qrsDetect locates the PQRST complexes in the given ECG recording
+    %%%% qrsDetect locates the P-QRS-T complexes in the given ECG recording
 
     %%%%   Inputs:
     %       *ecg--------------- ECG signal
